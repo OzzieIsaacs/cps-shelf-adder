@@ -9,9 +9,13 @@ Open the file mass_add_books.py, set the parameters to the right values. The id 
 by moving with the mouse over the add to shelf element, the id of the shelf is displayed in the adress shown. Booklist is the filename from above.
 
 username = 'admin'
+
 password = 'admin123'
+
 shelf_id = '1'
+
 booklist = 'booklist.csv'
+
 serveradress = 'http://127.0.0.1:8083'
 
 Make sure calibre-web is running, and start the script: python mass_add_books.py
