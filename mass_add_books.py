@@ -2,7 +2,7 @@ import requests
 import csv
 
 username = 'admin'
-password = 'admin123'
+password = ''
 shelf_id = '1'
 booklist = 'booklist.csv'
 serveradress = 'http://127.0.0.1:8083'
