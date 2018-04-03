@@ -8,7 +8,7 @@ booklist = 'booklist.csv'
 serveradress = 'http://127.0.0.1:8083'
 
 error=False
-r = requests.post(serveradress+'/login?next=/', data = {'username':username,'password':password,'submit':''})
+r = requests.post(serveradress+'/login?next=/', data = {'username':username,'password':password,'submit':'', 'remember_me':'on', 'next':'/'})
 headers = {'Referer': serveradress+'/'}
 if "login" in r.text:
     error=True
