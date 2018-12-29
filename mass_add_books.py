@@ -15,7 +15,7 @@ if shelf_id.isdigit():
     if "login" in r.text:
         error=True
     if r.status_code == 200 and not error:
-        with open(booklist) as csvfile:
+        with open(booklist, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for current_row in reader:
                 if "id" in current_row:
