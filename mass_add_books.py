@@ -24,7 +24,7 @@ if shelf_id.isdigit():
                         if add.status_code != 200:
                             print('Error: Failed to add book with id %s to shelf %s'%(current_row['id'],shelf_id))
                         else:
-                            message = re.findall(u"id=\"flash_.*class=.*>(.*)</div>", add.content)
+                            message = re.findall(u"id=\"flash_.*class=.*>(.*)</div>", add.content.decode('utf-8'))
                             if not message:
                                 print('Error: Book with id %s already in shelf, or shelf not exisitend'%(current_row['id']))
                             else:
