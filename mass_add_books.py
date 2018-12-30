@@ -1,6 +1,7 @@
 import requests
 import csv
 import re
+import sys
 
 username = 'admin'
 password = ''
@@ -15,7 +16,11 @@ if shelf_id.isdigit():
     if "login" in r.text:
         error=True
     if r.status_code == 200 and not error:
-        with open(booklist, newline='') as csvfile:
+                if sys.version_info.major >= 3:
+            csv_f =open(booklist,newline='')
+        else:
+            csv_f =open(booklist)
+        with csv_f as csvfile:
             reader = csv.DictReader(csvfile)
             for current_row in reader:
                 if "id" in current_row:
