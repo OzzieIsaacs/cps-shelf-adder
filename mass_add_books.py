@@ -16,7 +16,7 @@ if shelf_id.isdigit():
     if "login" in r.text:
         error=True
     if r.status_code == 200 and not error:
-                if sys.version_info.major >= 3:
+        if sys.version_info.major >= 3:
             csv_f =open(booklist,newline='')
         else:
             csv_f =open(booklist)
