@@ -5,16 +5,23 @@ import sys
 
 username = 'admin'
 password = 'admin123'
-shelf_id = '1'
-booklist = 'Meine Bücher.csv'
+booklist = 'books.csv'
 server_address = 'http://127.0.0.1:8083'
-
 error = False
+
+if len(sys.argv) < 2:
+    print('Usage: python script.py <shelf_id>')
+    print('Example: python script.py 4')
+    sys.exit(1)
+
+shelf_id = sys.argv[1]
+
 if not shelf_id.isdigit():
     print('Error: Shelf_id is not a number')
     sys.exit(1)
 
 r = requests.session()
+
 try:
     login_page = r.get(server_address + '/login')
     token = re.search('<input type="hidden" name="csrf_token" value="(.*)">', login_page.text)
@@ -30,10 +37,12 @@ except Exception as e:
     sys.exit(1)
 
 headers = {'Referer': server_address + '/'}
+
 if "login" in resp.text or resp.status_code != 200:
     print('Error: Could not log in to calibre-web')
     r.close()
     sys.exit(1)
+
 try:
     if sys.version_info.major >= 3:
         csv_f = open(booklist, newline='')
@@ -43,6 +52,7 @@ except Exception as e:
     print("Error on opening bookslist file: %s" % e)
     r.close()
     sys.exit(1)
+
 with csv_f as csvfile:
     reader = csv.DictReader(csvfile)
     for current_row in reader:
@@ -61,19 +71,15 @@ with csv_f as csvfile:
                 else:
                     message = re.findall(u"id=\"flash_.*class=.*>(.*)</div>", add.content.decode('utf-8'))
                     if not message:
-                        print('Error: Book with id %s already in shelf, or shelf not existing' % (id))
+                        print('Error: Book with id %s already in shelf, or shelf does not exist' % (id))
                     else:
-                        print('Request to add Book with id %s to shelf was successfully send. Calibre-Web Response: %s' % (id, message[0]))
+                        print('Request to add Book with id %s to shelf was successfully. Calibre-Web Response: %s' % (id, message[0]))
             else:
                 print('Error: id %s is not a number' % id)
         else:
             print("No ID-field found in current row of csv file, check for seperation character (has to be ',') and spelling of 'id' field")
             r.close()
             sys.exit(1)
+
 r.close()
 print("script finished successfully")
-
-
-
-
-
